@@ -77,8 +77,8 @@ class OTPPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.ActivityResul
 
             getAppSignatureMethod -> {
                 if (activity != null) {
-                    val signature = AppSignatureHelper(this.activity!!).getAppSignatures()[0]
-                    result.success(signature)
+                    val signatures = AppSignatureHelper(this.activity!!).getAppSignatures()
+                    result.success(signatures.firstOrNull())
                 } else result.success(null)
             }
 

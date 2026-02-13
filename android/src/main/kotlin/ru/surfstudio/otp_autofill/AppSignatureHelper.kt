@@ -16,13 +16,14 @@ private const val NUM_BASE64_CHAR = 11
 // https://github.com/googlearchive/android-credentials/blob/master/sms-verification/android/app/src/main/java/com/google/samples/smartlock/sms_verify/AppSignatureHelper.java
 class AppSignatureHelper(context: Context) : ContextWrapper(context) {
 
+    @Suppress("DEPRECATION")
     fun getAppSignatures(): List<String> {
         return try {
             val packageName = packageName
             val packageManager = packageManager
-            val signatures = packageManager.getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES).signatures
-            signatures?.mapNotNull { hash(packageName, it.toCharsString()) } ?: emptyList()
+            val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            val signatures = packageInfo.signatures ?: return emptyList()
+            signatures.mapNotNull { hash(packageName, it.toCharsString()) }
         } catch (e: PackageManager.NameNotFoundException) {
             emptyList()
         }
