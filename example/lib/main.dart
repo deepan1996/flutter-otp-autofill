@@ -19,14 +19,15 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_autofill/otp_autofill.dart';
-import 'package:otp_autofill_example/sample_strategy.dart';
+// ignore: always_use_package_imports
+import 'sample_strategy.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.all(40),
             child: TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,

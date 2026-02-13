@@ -13,9 +13,8 @@ dependencies:
   otp_autofill:
     path: ../
 
-
 dev_dependencies:
-  surf_lint_rules: ^2.0.0
+  surf_lint_rules: ^4.0.0
 
 flutter:
   uses-material-design: true

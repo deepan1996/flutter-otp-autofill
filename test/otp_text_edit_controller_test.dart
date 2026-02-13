@@ -651,6 +651,8 @@ class TestStrategyWithUnexpectedException extends OTPStrategy {
   }
 }
 
+// Reserved for tests that need a MethodChannel mock.
+// ignore: unreachable_from_main
 class MockMethodChannel extends Mock implements MethodChannel {}
 
 class MockPlatformWrapper extends Mock implements PlatformWrapper {}

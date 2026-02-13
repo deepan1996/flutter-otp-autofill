@@ -126,16 +126,21 @@ class OTPPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.ActivityResul
                     // Consent denied. User can type OTC manually.
                 }
 
-            credentialPickerRequest -> if (resultCode == Activity.RESULT_OK && data != null) {
-                // Check if the result is for credential picker
-                if (data.hasExtra(SmsRetriever.EXTRA_SMS_MESSAGE)) {
-                    // This is a result from the SMS consent picker
-                    val phoneNumber =
-                        Identity.getSignInClient(context!!).getPhoneNumberFromIntent(data)
-                    lastResult?.success(phoneNumber)
+            credentialPickerRequest -> {
+                // Phone number hint picker result: extract number via Identity API.
+                // The hint intent does NOT use SmsRetriever.EXTRA_SMS_MESSAGE (that's for SMS consent).
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    try {
+                        val phoneNumber =
+                            Identity.getSignInClient(context!!).getPhoneNumberFromIntent(data)
+                        lastResult?.success(phoneNumber)
+                    } catch (e: Exception) {
+                        lastResult?.error("403", "Failed to get phone number", e.message)
+                    }
                     lastResult = null
                 } else {
-                    lastResult?.error("403", "User denied consent", null)
+                    // User cancelled or dismissed the picker
+                    lastResult?.success(null)
                     lastResult = null
                 }
             }
